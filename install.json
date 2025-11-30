@@ -1,0 +1,17 @@
+{
+  "run": [
+    {
+      "method": "shell.run",
+      "params": {
+        "message": "npm ci || npm install"
+      }
+    },
+    {
+      "method": "notify",
+      "params": {
+        "html": "<b>Install complete</b><br><br>Click here to start the app!",
+        "href": "./start.json"
+      }
+    }
+  ]
+}

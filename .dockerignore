@@ -1,0 +1,14 @@
+# Ignore files not needed in the Docker build context
+node_modules
+npm-debug.log
+.git
+.gitignore
+.vscode
+.DS_Store
+coverage
+.tmp
+dist
+
+# Local env or editor files
+*.local
+*.swp

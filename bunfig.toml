@@ -1,0 +1,9 @@
+[install]
+# Override problematic dependencies
+[install.scopes."@radix-ui"]
+# Map react-sheet to react-dialog since they're compatible
+"react-sheet" = "@radix-ui/react-dialog@^1.0.5"
+
+[install.scopes."lovable"]
+# Remove lovable-tagger dependency
+"tagger" = "@types/node@^20.4.0"
