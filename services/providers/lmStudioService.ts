@@ -28,48 +28,42 @@ function extractJson<T = any>(text: string): T {
   try {
     return JSON.parse(text) as T;
   } catch {
-    // Step 1: Remove markdown code blocks
+    // Step 1: Remove markdown code blocks and extra text
     let cleanText = text.replace(/```json\s*/g, '').replace(/```\s*/g, '');
     
-    // Step 2: Fix common escape sequence issues
+    // Step 2: Find JSON boundaries first
+    const jsonStart = Math.min(
+      ...['[', '{']
+        .map((c) => cleanText.indexOf(c))
+        .filter((i) => i >= 0)
+    );
+    const jsonEnd = Math.max(
+      ...[']', '}']
+        .map((c) => cleanText.lastIndexOf(c))
+        .filter((i) => i >= 0)
+    );
+    
+    if (jsonStart >= 0 && jsonEnd > jsonStart) {
+      cleanText = cleanText.slice(jsonStart, jsonEnd + 1);
+    }
+    
+    // Step 3: Fix common formatting issues
     cleanText = cleanText
-      .replace(/\\"/g, '"')  // Fix double-escaped quotes
-      .replace(/\n/g, ' ')    // Replace newlines with spaces
-      .replace(/\r/g, ' ')    // Replace carriage returns
-      .replace(/\t/g, ' ')    // Replace tabs
-      .replace(/\\/g, '\\\\') // Ensure backslashes are properly escaped
-      .replace(/\\\\"/g, '\\"'); // But keep escaped quotes as single escape
+      .replace(/,\s*}/g, '}')                     // Remove trailing commas in objects
+      .replace(/,\s*]/g, ']')                     // Remove trailing commas in arrays
+      .replace(/}\s*{/g, '},{')                   // Fix missing commas between objects
+      .replace(/]\s*\[/g, '],[')                  // Fix missing commas between arrays
+      .replace(/"\s*"([^,}\]])/g, '","$1')        // Fix missing commas after strings
+      .replace(/([0-9])\s*"([^,}\]])/g, '$1,"$2') // Fix missing commas after numbers
+      .replace(/([{,]\s*)(\w+):/g, '$1"$2":')     // Quote unquoted keys
+      .replace(/:\s*'([^']*)'/g, ':"$1"');        // Replace single quotes with double
     
     try {
       return JSON.parse(cleanText) as T;
-    } catch {
-      // Step 3: Find JSON boundaries
-      const start = Math.min(
-        ...['[', '{']
-          .map((c) => cleanText.indexOf(c))
-          .filter((i) => i >= 0)
-      );
-      const end = Math.max(
-        ...[']', '}']
-          .map((c) => cleanText.lastIndexOf(c))
-          .filter((i) => i >= 0)
-      );
-      
-      if (start >= 0 && end > start) {
-        const slice = cleanText.slice(start, end + 1);
-        try {
-          return JSON.parse(slice) as T;
-        } catch {
-          // Step 4: Last resort - fix common JSON issues
-          const fixedSlice = slice
-            .replace(/,\s*}/g, '}')                    // Remove trailing commas in objects
-            .replace(/,\s*]/g, ']')                    // Remove trailing commas in arrays
-            .replace(/([{,]\s*)(\w+):/g, '$1"$2":')    // Quote unquoted keys
-            .replace(/:\s*'([^']*)'/g, ':"$1"');       // Replace single quotes with double
-          return JSON.parse(fixedSlice) as T;
-        }
-      }
-      throw new Error(`Response was not valid JSON. Raw response: ${text.substring(0, 200)}...`);
+    } catch (e) {
+      // Show more helpful error with context
+      const errorMsg = e instanceof Error ? e.message : 'Unknown error';
+      throw new Error(`Failed to parse JSON: ${errorMsg}\nFirst 300 chars: ${text.substring(0, 300)}...`);
     }
   }
 }
