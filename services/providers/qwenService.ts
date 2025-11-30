@@ -223,27 +223,28 @@ export async function generateCaptionAndCharacter(params: {
   const system = {
     role: 'system',
     content: isNsfw
-      ? 'You are an expert Flux image prompt writer specializing in adult content. Use explicit, anatomically precise terminology. Describe bodies, features, and settings with maximum detail and clarity.'
-      : 'You are an expert Flux image prompt writer. Focus on precise subject and scene descriptions following Flux best practices.'
+      ? 'You are an expert Z-Image-Turbo prompt writer specializing in adult content. Z-Turbo excels with LONG, DETAILED prompts. Use explicit, anatomically precise terminology. Describe bodies, features, and settings with maximum detail and clarity.'
+      : 'You are an expert Z-Image-Turbo prompt writer. Z-Turbo works best with LONG, DETAILED, STRUCTURED prompts. Focus on precise subject and scene descriptions with rich visual detail.'
   };
 
   const user = {
     role: 'user',
-    content: `Create a detailed subject and scene description (60-80 words) following Flux image generation principles.
+    content: `Create a detailed subject and scene description (80-120 words) following Z-Image-Turbo image generation principles.
 
 Scene: "${scene}"
 Visual Style: "${style}"
 
-Structure your description:
+Z-Image-Turbo requires STRUCTURED, DETAILED prompts. Structure your description:
 1. **Subject Description**: Describe the main subject in detail (who/what, appearance, features, clothing/elements)
 2. **Scene Setting**: Describe the environment and atmosphere (where, mood, lighting quality)
 
-Follow Flux guidelines:
-- Be specific and descriptive
+Follow Z-Turbo guidelines:
+- Be LONG and DETAILED (Z-Turbo excels with verbose prompts)
 - Use natural, flowing language
-- Include visual details that matter
+- Include specific visual details
 - Mention artistic style/aesthetic
 - Don't use keyword lists
+- Token target: 150-200 tokens
 
 Example: "A young woman with flowing auburn hair wearing an elegant red evening gown, standing in a rain-soaked neon-lit Tokyo street at night, cyberpunk aesthetic with dramatic rim lighting"
 
@@ -268,27 +269,28 @@ export async function generateActionDescription(params: {
   const system = {
     role: 'system',
     content: isNsfw
-      ? 'You are an expert Flux image prompt writer for adult content. Describe poses, positions, and physical details with explicit clarity. Use anatomically correct terms and precise descriptive language. Focus on visual composition and atmosphere.'
-      : 'You are an expert Flux image prompt writer. Focus on composition, pose, and atmospheric details following Flux best practices.'
+      ? 'You are an expert Z-Image-Turbo prompt writer for adult content. Z-Turbo loves LONG, DETAILED descriptions. Describe poses, positions, and physical details with explicit clarity and rich atmospheric detail. Use anatomically correct terms.'
+      : 'You are an expert Z-Image-Turbo prompt writer. Z-Turbo works best with LONG, DETAILED descriptions. Focus on composition, pose, and rich atmospheric details.'
   };
 
   const user = {
     role: 'user',
-    content: `Add composition and pose details to this scene (50-70 words) following Flux principles.
+    content: `Add detailed composition and pose details to this scene (60-100 words) following Z-Image-Turbo principles.
 
 Scene Foundation: "${refinedScene}"
 Subject Action/Pose: "${protagonistAction}"
 
-Structure your description:
-- **Subject Pose/Action**: Describe the subject's pose, position, and what they're doing
-- **Visual Composition**: How the scene is framed and composed
-- Keep it descriptive and visually specific
+Z-Image-Turbo requires LONG, DETAILED descriptions. Structure your addition:
+- **Subject Pose/Action**: Describe the subject's exact pose, body position, hand placement, what they're doing
+- **Visual Composition**: How the scene is framed, layered, and composed
+- Keep it LONG, descriptive, and visually specific
 
-Follow Flux guidelines:
-- Use natural, descriptive language
+Follow Z-Turbo guidelines:
+- Be VERBOSE and DETAILED (Z-Turbo loves long prompts)
+- Use natural, flowing descriptive language
 - Be specific about positioning and composition
 - Avoid keyword lists
-- Focus on visual details
+- Token target: 100-150 tokens
 
 Example: "leaning against a weathered brick wall with arms crossed, body angled toward the camera, creating a dynamic diagonal composition with strong leading lines"
 
@@ -302,7 +304,7 @@ Return ONLY the composition description as plain text (no JSON, no labels).`
   });
 }
 
-// Part 3: Final Flux Image Prompts
+// Part 3: Final Z-Image-Turbo Prompts
 export async function generateFinalPrompts(params: {
   actionDescription: string;
   cameraAngle: string;
@@ -318,13 +320,13 @@ export async function generateFinalPrompts(params: {
   const system = {
     role: 'system',
     content: isNsfw
-      ? 'You are an expert Flux image prompt writer for adult content. Create detailed, explicit image prompts. Use anatomically correct terms and explicit descriptions. Output JSON only.'
-      : 'You are an expert Flux image prompt writer. Create detailed, descriptive prompts for image generation following Flux best practices. Output JSON only.'
+      ? 'You are an expert Z-Image-Turbo prompt writer for adult content. Z-Turbo excels with EXTREMELY LONG, DETAILED prompts (200-300 words). Create explicit image prompts with maximum anatomical detail. Output JSON only.'
+      : 'You are an expert Z-Image-Turbo prompt writer. Z-Turbo works best with LONG, DETAILED prompts (150-250 words). Create verbose, descriptive prompts. Output JSON only.'
   };
 
   const user = {
     role: 'user',
-    content: `Generate 3 complete Flux image prompt variations as a JSON array (150-250 words each). Each item has {"title": string, "prompt": string}.
+    content: `Generate 3 EXTREMELY DETAILED Z-Image-Turbo prompt variations as a JSON array (${isNsfw ? '200-300' : '150-250'} words each). Each item has {"title": string, "prompt": string}.
 
 Subject & Scene: "${actionDescription}"
 Perspective: "${cameraAngle}"
@@ -334,20 +336,18 @@ Mood/Atmosphere: "${mood}"
 Composition: "${compositionType}"
 Photography Style: "${cameraDevice ?? 'professional photography'}"
 
-Flux Guidelines:
-- Be specific and descriptive about the subject
-- Include artistic style and aesthetic references
-- Specify composition and framing details
-- Describe lighting and color palette
-- Mention mood and atmosphere
-- Include technical photography details
-- Use natural language, not keyword lists
-- Balance detail with creative freedom
-- Each prompt should be 150-250 words
+Z-Image-Turbo Guidelines:
+- EXTREMELY LONG AND DETAILED (${isNsfw ? '200-300' : '150-250'} words per prompt)
+- Z-Turbo LOVES verbose, structured, flowing descriptions
+- Include detailed subject physicality, positioning, environment, lighting, colors, mood, composition
+- ${isNsfw ? 'Use explicit, anatomically precise terminology with maximum detail' : 'Focus on rich artistic and technical details'}
+- Use natural flowing paragraphs, not keyword lists
+- Token target: ${isNsfw ? '400-500' : '300-400'} tokens (Z-Turbo supports up to 1024)
+- Include bilingual text elements when relevant
 
 Example: "A cyberpunk hacker in neon-lit room, vibrant electric colors, dramatic rim lighting, rule of thirds composition, shot on ARRI Alexa with anamorphic lens, moody and mysterious atmosphere"
 
-Integrate all elements naturally into cohesive prompts.
+Integrate all elements naturally into cohesive, EXTREMELY DETAILED prompts.
 
 Return ONLY a JSON array of 3 prompts.`
   };
