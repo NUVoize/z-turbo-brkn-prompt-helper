@@ -136,7 +136,7 @@ export async function generateActionDescription(params: {
   }
 }
 
-// Part 3: Final Flux Image Prompts
+// Part 3: Final Z-Image-Turbo Prompts
 export async function generateFinalPrompts(params: {
   actionDescription: string;
   cameraAngle: string;

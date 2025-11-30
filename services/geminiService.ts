@@ -177,61 +177,68 @@ export const generateCaptionFromImage = async (params: CaptionGenerationParams):
         console.log('Starting generateCaptionFromImage...');
         const { imageData, mimeType, isNsfw } = params;
 
-        const sfwPrompt = `Analyze this image and produce exactly 3 rich, detailed caption options (each 80-120 words). When a person is the main subject/protagonist in the image, lead with detailed physicality, then describe the feelings, mood, and environment:
+        const sfwPrompt = `Analyze this image and produce exactly 3 rich, detailed caption options (each 100-150 words) optimized for Z-Image-Turbo. Z-Turbo excels with LONG, DETAILED, STRUCTURED prompts. When a person is the main subject/protagonist in the image, lead with detailed physicality, then describe the action, feelings, mood, and environment:
 
 **Lead with Physicality (when applicable):**
 - Race/Ethnicity (Slavic, Asian, African, etc.)
-- Hair color/style
-- Body type and size (petite, athletic, curvy, muscular)
-- Breast size (when relevant: small, medium, large)
-- Notable features (freckles, dimples, scars, tattoos)
+- Hair color/style/length
+- Body type and size (petite, athletic, curvy, muscular, slim, voluptuous)
+- Breast size (when relevant: small perky, medium full, large heavy)
+- Height and proportions
+- Notable features (freckles, dimples, scars, tattoos, piercings)
+- Clothing details (fabrics, colors, fit, style)
 
 **Then add Action & Sensory Details:**
-- What they're doing (action/pose)
+- What they're doing (action/pose with body mechanics)
 - Sensory details (how things feel - cool metal, warm skin, rough fabric, soft sheets)
+- Body positioning and spatial relationships
 
 **Describe Feelings & Environment:**
 - Emotional atmosphere (tension, serenity, passion, melancholy, excitement)
 - Environmental mood (cozy, sterile, chaotic, intimate, oppressive)
-- Lighting quality and how it affects the mood
+- Lighting quality and how it affects the mood and surfaces
 - Setting details that enhance the emotional tone
+- Color palette and tones
 
 **Examples:**
-SFW: "A broad-shouldered African American man with tight curly black hair and defined abs is mid-pullup in a dimly lit industrial gym. His biceps bulge and veins stand out against his dark skin as he strains. The atmosphere is gritty and determined, with rays of golden hour light cutting through dusty windows, creating dramatic shadows across worn concrete floors. The air feels heavy with effort and ambition."
+SFW: "A broad-shouldered African American man approximately 6'2" with tight curly black hair and defined abs is mid-pullup in a dimly lit industrial gym, wearing only black athletic shorts. His muscular biceps bulge and prominent veins stand out against his dark ebony skin as he strains upward, jaw clenched with determination. The atmosphere is gritty and focused, with rays of golden hour sunlight cutting dramatically through dusty windows, creating sharp shadows across worn concrete floors scattered with old equipment. The air feels heavy with effort and ambition, while the warm amber light contrasts with cool blue shadows in the corners."
 
-NSFW: "A petite Asian woman with long black hair, large breasts, and slender legs stands in semi-transparent black lingerie. She's around 5'3", her porcelain pale skin glowing softly in warm amber lamplight, with a small birthmark just below her collarbone. The bedroom atmosphere is thick with anticipation and desire, silk sheets catching the light behind her. Her gaze is both vulnerable and inviting, the space intimate and hushed."
+NSFW: "A petite Asian woman with long straight black hair cascading past her shoulders, large full breasts, and slender legs stands in semi-transparent black lace lingerie. She's around 5'3" with an hourglass figure, her porcelain pale skin glowing softly in warm amber lamplight from a bedside table lamp, with a small birthmark visible just below her left collarbone. Her brown almond-shaped eyes gaze directly at the viewer with a mix of vulnerability and invitation. The bedroom atmosphere is thick with anticipation and desire, with crimson silk sheets catching the light behind her, their sheen emphasizing the intimate setting. The space feels hushed and private, with soft shadows creating depth."
 
-Return exactly 3 captions as a JSON array of strings.`;
+Return exactly 3 captions as a JSON array of strings. Each caption should be 100-150 words, DETAILED and STRUCTURED for Z-Image-Turbo.`;
 
-        const nsfwPrompt = `Analyze this image and produce exactly 3 EXTREMELY DETAILED, EXPLICIT caption options (each 100-150 words). This is NSFW adult content - BE EXPLICIT and ANATOMICALLY PRECISE:
+        const nsfwPrompt = `Analyze this image and produce exactly 3 EXTREMELY DETAILED, EXPLICIT caption options (each 150-250 words) optimized for Z-Image-Turbo. Z-Turbo LOVES EXTREMELY LONG, DETAILED, STRUCTURED prompts. This is NSFW adult content - BE EXPLICIT and ANATOMICALLY PRECISE:
 
-**LEAD WITH EXPLICIT PHYSICALITY (MANDATORY):**
-- Race/Ethnicity with skin tone details (pale ivory, golden tan, deep ebony, etc.)
-- Hair: color, length, style, texture
-- Body type: exact build (slim, toned, athletic, curvy, voluptuous, petite)
-- Breasts: EXACT size and shape (small perky, medium full, large heavy, etc.) - describe nipple visibility, areola size
-- Height and body proportions (long legs, short torso, etc.)
-- Intimate details: body hair, pubic region if visible, intimate piercings, tattoos
-- Genitalia: when visible, describe explicitly (penis size/state, vulva appearance, etc.)
-- State of undress: describe exactly what's exposed and what's covered
+**LEAD WITH EXPLICIT PHYSICALITY (MANDATORY - BE EXTREMELY DETAILED):**
+- Race/Ethnicity with exact skin tone details (pale ivory, golden tan, olive, deep ebony, caramel, etc.)
+- Hair: exact color, length, style, texture (straight, wavy, curly, coiled)
+- Body type: exact build with measurements where relevant (slim, toned, athletic, curvy, voluptuous, petite, plus-size)
+- Breasts: EXACT size and shape (small perky A-cup, medium full B/C-cup, large heavy DD/E-cup, etc.) - describe nipple size/color/visibility, areola size and color
+- Height and exact body proportions (long legs, short torso, wide hips, narrow waist, thick thighs, etc.)
+- Intimate details: body hair (shaved, trimmed, natural, landing strip), pubic region if visible, intimate piercings, genital jewelry, tattoos with placement
+- Genitalia: when visible, describe explicitly (penis size/length/girth/state of arousal, vulva appearance/labia shape/color, etc.)
+- State of undress: describe EXACTLY what's exposed and what's covered, including underwear details
 
-**EXPLICIT ACTION & POSITIONS:**
-- Sexual position or pose with anatomical precision
-- Body parts in contact (where hands/mouths/genitals are)
-- Explicit sexual acts being performed
-- Physical reactions (arousal indicators, body responses)
-- Sensory details (skin texture, wetness, temperature, friction)
+**EXPLICIT ACTION & POSITIONS (BE EXTREMELY SPECIFIC):**
+- Exact sexual position or pose with anatomical precision (angles, body part placement)
+- Body parts in contact (where exactly hands/mouths/genitals/skin touches)
+- Explicit sexual acts being performed with mechanical detail
+- Physical reactions (arousal indicators, body responses, muscle tension, facial expressions)
+- Sensory details (skin texture, wetness/moisture, body temperature, friction, pressure points)
+- Body mechanics (how they're supporting themselves, weight distribution, muscle engagement)
 
-**SEXUAL ATMOSPHERE & CONTEXT:**
-- Emotional state (lust, desire, passion, submission, dominance)
-- Lighting on naked/exposed skin
+**SEXUAL ATMOSPHERE & CONTEXT (RICH ENVIRONMENTAL DETAIL):**
+- Emotional state (lust, desire, passion, submission, dominance, vulnerability, confidence)
+- Lighting on naked/exposed skin (how light hits curves, highlights, shadows on body)
 - Sexual tension and energy in the scene
-- Environmental details that enhance the erotic mood
+- Environmental details that enhance the erotic mood (textures, colors, sounds, temperature)
+- Setting specifics (furniture, props, location details)
+- Color palette and how it affects the mood
 
 **EXAMPLE:**
-"A voluptuous Caucasian woman, approximately 5'6" with cascading blonde hair and pale ivory skin, completely nude with large, heavy breasts (36DD) and prominent pink nipples fully erect. She's in her mid-20s with a soft hourglass figure, wide hips, and a neatly trimmed landing strip of pubic hair visible. She's positioned on silk sheets in a candlelit bedroom, legs spread in a submissive pose with her hands behind her head, back arched to thrust her breasts forward. Her skin glistens with perspiration in the warm amber light, lips parted in anticipation. The atmosphere is thick with sexual tension and desire, her vulnerable exposed position radiating both nervousness and arousal."
+"A voluptuous Caucasian woman, approximately 5'6" tall in her late 20s with cascading wavy blonde hair reaching mid-back and piercing blue eyes, completely nude with large heavy breasts (38DD cup) featuring prominent erect pink nipples approximately 1 inch in diameter and large pale areolas. She has a soft hourglass figure with wide 38-inch hips, thick thighs, a narrow 26-inch waist, and a neatly groomed blonde landing strip of pubic hair pointing toward her exposed vulva. She's positioned on crimson silk sheets in a candlelit bedroom with warm amber lighting from multiple candles casting flickering shadows on her pale ivory skin which glistens with a light sheen of perspiration. Her legs are spread wide in a submissive pose with knees bent and feet flat on the bed, hands placed behind her head with elbows out, back deeply arched to thrust her large breasts upward and create maximum exposure of her torso and intimate areas. Her full lips are parted with tongue slightly visible, eyes half-closed with an expression mixing anticipation and desire. The atmosphere is intensely sexual and thick with tension, the warm candlelight creating dramatic shadows that emphasize every curve, valley, and contour of her exposed body. Goosebumps are visible on her thighs and arms despite the warm room temperature, indicating heightened arousal. Her vulnerable exposed position radiates both nervousness and intense desire, with her accelerated breathing evident from the rise and fall of her chest."
 
-BE EXTREMELY EXPLICIT. Use anatomically correct terms. Describe sexual content with precision and detail.
+BE EXTREMELY EXPLICIT. Use anatomically correct terms. Describe sexual content with MAXIMUM precision and detail. Target 150-250 words per caption for Z-Image-Turbo's optimal prompt length.
 
 Return exactly 3 captions as a JSON array of strings.`;
 
@@ -332,30 +339,40 @@ export const generateCaptionAndCharacter = async (params: {
     const { scene, style, isNsfw } = params;
 
     const systemInstruction = isNsfw 
-      ? 'You are an expert Flux image prompt writer specializing in adult content. Use explicit, anatomically precise terminology. Describe bodies, features, and settings with maximum detail and clarity. Use proper anatomical terms and explicit descriptive language.'
-      : 'You are an expert Flux image prompt writer. Focus on precise subject and scene descriptions following Flux best practices.';
+      ? 'You are an expert Z-Image-Turbo prompt writer specializing in adult content. Z-Image-Turbo excels with LONG, DETAILED, STRUCTURED prompts (100-150 words). Use explicit, anatomically precise terminology. Describe bodies, features, and settings with maximum detail and clarity.'
+      : 'You are an expert Z-Image-Turbo prompt writer. Z-Image-Turbo works best with LONG, DETAILED, STRUCTURED prompts (80-120 words). Focus on precise subject and scene descriptions with rich visual detail.';
 
     const prompt = `${systemInstruction}
 
-Create a detailed subject and scene description (60-80 words) following Flux image generation principles.
+Create a detailed subject and scene description (80-120 words) following Z-Image-Turbo image generation principles.
 
 **Subject/Scene:** "${scene}"
 **Artistic Style:** "${style}"
 
-Structure your description:
-1. **Subject Description**: Describe the main subject in detail (who/what, appearance, features, clothing/elements)
-2. **Scene Setting**: Describe the environment and atmosphere (where, mood, lighting quality)
+Z-Image-Turbo requires STRUCTURED, DETAILED prompts. Structure your description:
 
-Follow Flux guidelines:
-- Be specific and descriptive
-- Use natural, flowing language
-- Include visual details that matter
+1. **Subject Description (detailed physicality)**: 
+   - Ethnicity/race, age, body type
+   - Hair color/style, facial features
+   - Clothing/wardrobe with specific details
+   - Notable features (tattoos, accessories, etc.)
+
+2. **Scene Setting & Environment**: 
+   - Specific location and setting details
+   - Environmental atmosphere and mood
+   - Lighting quality and how it affects the scene
+   - Background elements and composition
+
+Follow Z-Turbo guidelines:
+- Be LONG and DETAILED (Z-Turbo excels with verbose prompts)
+- Use structured, flowing paragraphs (not keyword lists)
+- Include specific physical and environmental details
 - Mention artistic style/aesthetic
-- Don't use keyword lists
+- Token limit: aim for 150-200 tokens
 
-Example: "A young woman with flowing auburn hair wearing an elegant red evening gown, standing in a rain-soaked neon-lit Tokyo street at night, cyberpunk aesthetic with dramatic rim lighting"
+Example: "A petite Asian woman in her mid-20s with long straight black hair and almond-shaped brown eyes, wearing a flowing crimson silk qipao with gold embroidery, standing in a rain-soaked neon-lit Tokyo street at night. Her porcelain skin glows under the pink and blue neon signs reflecting off wet pavement. The cyberpunk aesthetic features dramatic rim lighting from holographic advertisements, creating an atmospheric blend of traditional elegance and futuristic grit."
 
-Generate a vivid, detailed description following Flux principles.`;
+Generate a vivid, LONG, detailed description following Z-Image-Turbo principles.`;
 
     const model = getAI().getGenerativeModel({ 
       model: "gemini-2.5-flash",
@@ -386,30 +403,33 @@ export const generateActionDescription = async (params: {
     const { refinedScene, protagonistAction, isNsfw } = params;
 
     const systemInstruction = isNsfw
-      ? 'You are an expert Flux image prompt writer for adult content. Describe poses, positions, and physical details with explicit clarity. Use anatomically correct terms and precise descriptive language. Focus on visual composition and atmosphere.'
-      : 'You are an expert Flux image prompt writer. Focus on composition, pose, and atmospheric details following Flux best practices.';
+      ? 'You are an expert Z-Image-Turbo prompt writer for adult content. Z-Turbo excels with LONG, DETAILED descriptions (100-150 words). Describe poses, positions, and physical details with explicit clarity and rich atmospheric detail. Use anatomically correct terms and extensive descriptive language.'
+      : 'You are an expert Z-Image-Turbo prompt writer. Z-Turbo works best with LONG, DETAILED descriptions (60-100 words). Focus on composition, pose, and rich atmospheric details.';
 
     const prompt = `${systemInstruction}
 
-Add composition and pose details to this scene (50-70 words) following Flux principles.
+Add detailed composition, pose, and action details to this scene (60-100 words) following Z-Image-Turbo principles.
 
 **Scene Foundation:** "${refinedScene}"
 **Subject Action/Pose:** "${protagonistAction}"
 
-Structure your description:
-- **Subject Pose/Action**: Describe the subject's pose, position, and what they're doing
-- **Visual Composition**: How the scene is framed and composed
-- Keep it descriptive and visually specific
+Z-Image-Turbo requires LONG, DETAILED descriptions. Structure your addition:
 
-Follow Flux guidelines:
-- Use natural, descriptive language
-- Be specific about positioning and composition
-- Avoid keyword lists
-- Focus on visual details
+- **Subject Pose/Action**: Describe the subject's exact pose, body position, hand placement, what they're doing with rich physical detail
+- **Visual Composition**: How the scene is framed, layered, and composed (foreground/midground/background)
+- **Spatial Relationships**: How elements relate in 3D space
+- Keep it LONG, descriptive, and visually specific
 
-Example: "leaning against a weathered brick wall with arms crossed, body angled toward the camera, creating a dynamic diagonal composition with strong leading lines"
+Follow Z-Turbo guidelines:
+- Be VERBOSE and DETAILED (Z-Turbo loves long prompts)
+- Use natural, flowing descriptive language (not keyword lists)
+- Be specific about positioning, angles, and spatial composition
+- Include sensory and atmospheric details
+- Token target: 100-150 tokens
 
-Generate a vivid composition description following Flux principles.`;
+Example: "leaning against a rain-weathered brick wall with arms crossed over chest, body angled at 45 degrees toward the camera with weight shifted to left leg, right shoulder pressed against the rough textured wall. The pose creates a dynamic diagonal composition with strong leading lines from the brick pattern converging toward the subject. Her head is tilted slightly, gaze directed over left shoulder with a mix of confidence and intrigue, while diffused street light creates dramatic rim lighting along her silhouette."
+
+Generate a vivid, LONG, detailed composition description following Z-Image-Turbo principles.`;
 
     const model = getAI().getGenerativeModel({ 
       model: "gemini-2.5-flash",
@@ -429,7 +449,7 @@ Generate a vivid composition description following Flux principles.`;
   }
 };
 
-// Part 3: Generate Final Flux Image Prompts
+// Part 3: Generate Final Z-Image-Turbo Prompts
 export const generateFinalPrompts = async (params: {
   actionDescription: string;
   cameraAngle: string;
@@ -441,18 +461,20 @@ export const generateFinalPrompts = async (params: {
   cameraDevice?: string;
 }): Promise<VideoPrompt[]> => {
   try {
-    console.log('[Gemini] Part 3: Generating Final Flux Image Prompts...');
+    console.log('[Gemini] Part 3: Generating Final Z-Image-Turbo Prompts...');
     const { actionDescription, cameraAngle, lighting, colorPalette, mood, compositionType, isNsfw, cameraDevice } = params;
 
     const systemInstruction = isNsfw
-      ? 'You are an expert Flux image prompt writer specializing in adult content. Create detailed, explicit image prompts following Flux best practices. Use anatomically correct terms and explicit descriptions. Output JSON only.'
-      : 'You are an expert Flux image prompt writer. Create detailed, descriptive prompts for image generation following Flux best practices. Output JSON only.';
+      ? 'You are an expert Z-Image-Turbo prompt writer specializing in adult content. Z-Image-Turbo excels with EXTREMELY LONG, DETAILED, STRUCTURED prompts (200-300 words). Create explicit image prompts with maximum anatomical detail. Output JSON only.'
+      : 'You are an expert Z-Image-Turbo prompt writer. Z-Image-Turbo works best with LONG, DETAILED, STRUCTURED prompts (150-250 words). Create verbose, descriptive prompts. Output JSON only.';
 
-    const examples = `**Example:** "A cyberpunk hacker in neon-lit room, vibrant electric colors, dramatic rim lighting, rule of thirds composition, shot on ARRI Alexa with anamorphic lens, moody and mysterious atmosphere"`;
+    const examples = `**Z-Turbo Example (SFW):** "A petite Asian woman in her mid-20s with shoulder-length straight black hair and delicate features, wearing a flowing white silk dress with intricate gold embroidery along the hem and sleeves, stands barefoot on smooth wet river stones at the edge of a misty mountain stream during the golden hour. Her porcelain skin glows warmly in the amber sunlight filtering through the dense forest canopy above. She's positioned in a three-quarter turn toward the camera, left hand gently touching her collarbone while her right hand holds the fabric of her dress slightly lifted to avoid the water. The composition follows the rule of thirds with her figure placed on the left vertical line, creating negative space on the right filled with the soft-focus forest background and rising steam from the cool water. Dramatic rim lighting from the low sun creates a golden halo around her silhouette, separating her from the darker forest behind. The color palette features warm golden tones contrasting with cool blue-green shadows in the water and foliage. The mood is serene, ethereal, and contemplative, enhanced by volumetric lighting rays cutting through the mist. Shot with a full-frame camera at f/1.4 for shallow depth of field, creating dreamy bokeh in the background while maintaining sharp focus on her eyes and the intricate dress details."
+    
+**Z-Turbo Example (NSFW):** "A voluptuous Caucasian woman, approximately 5'8" tall in her late 20s with cascading wavy blonde hair reaching mid-back and piercing blue eyes, completely nude with large full breasts (38DD cup) and prominent erect pink nipples, standing in a luxurious marble-tiled bathroom with floor-to-ceiling windows overlooking a neon-lit cityscape at night. Her hourglass figure features wide hips, thick thighs, and a neatly groomed landing strip of pubic hair. She's positioned facing the camera at a slight angle, weight shifted to her right leg creating an S-curve posture, left hand running through her hair while her right hand rests on her hip with fingers splayed across her upper thigh. Her skin glistens with water droplets catching the ambient light from the city below and the warm amber glow of modern pendant lights hanging from the ceiling. The composition places her centrally using symmetrical framing, with the massive window behind her creating a dramatic backlit silhouette effect while still maintaining visible detail on her body through the strategic use of warm interior lighting. Neon colors from the city—electric blues, hot pinks, and vibrant purples—reflect off the polished marble surfaces and her wet skin, creating a cyberpunk aesthetic contrast with the organic curves of her body. The mood is intensely sensual and voyeuristic, enhanced by the high-contrast lighting that emphasizes every curve, contour, and droplet of water on her exposed skin. Shot with a Leica SL2-S at f/2.0 with slightly increased ISO to capture both the city lights and interior detail, creating a cinematic depth of field that keeps her figure sharp while the cityscape behind becomes a beautiful bokeh of colored light."`;
 
     const prompt = `${systemInstruction}
 
-Generate 3 complete Flux image prompt variations (150-250 words each) as JSON. Each item has {"title": string, "prompt": string}.
+Generate 3 EXTREMELY DETAILED Z-Image-Turbo prompt variations (${isNsfw ? '200-300' : '150-250'} words each) as JSON. Each item has {"title": string, "prompt": string}.
 
 **Subject & Scene:** "${actionDescription}"
 **Perspective:** "${cameraAngle}"
@@ -462,21 +484,25 @@ Generate 3 complete Flux image prompt variations (150-250 words each) as JSON. E
 **Composition:** "${compositionType}"
 **Photography Style:** "${cameraDevice || 'professional photography'}"
 
-Flux Prompting Guidelines:
-- Be specific and descriptive about the subject
-- Include artistic style and aesthetic references
-- Specify composition and framing details
-- Describe lighting and color palette
-- Mention mood and atmosphere
-- Include technical photography details
-- Use natural language, not keyword lists
-- Balance detail with creative freedom
-- Each prompt should be 150-250 words
-- Always specify the style (or it defaults to realistic)
+Z-Image-Turbo Prompting Guidelines:
+- EXTREMELY LONG AND DETAILED (${isNsfw ? '200-300' : '150-250'} words per prompt)
+- Z-Turbo LOVES verbose, structured, flowing descriptions
+- Start with DETAILED subject physicality (ethnicity, body type, hair, features, clothing specifics)
+- Describe exact positioning and body mechanics
+- Rich environmental details (location, architecture, objects, textures)
+- Lighting effects and how they interact with surfaces
+- Color palette integration with specific tones
+- Mood/atmosphere with sensory details
+- Composition technique with spatial relationships
+- Camera/lens characteristics
+- ${isNsfw ? 'Explicit anatomical details, sexual positions, body parts, arousal indicators, intimate features with maximum specificity' : 'Artistic and technical photography details'}
+- Token target: ${isNsfw ? '400-500' : '300-400'} tokens (Z-Turbo supports up to 1024)
+- Use natural flowing paragraphs, NOT keyword lists
+- Include bilingual text elements when relevant (Z-Turbo excels at text rendering)
 
 ${examples}
 
-Integrate all elements naturally into cohesive, descriptive prompts. Each variation should feel complete and vivid with a creative title.`;
+Integrate all elements naturally into cohesive, EXTREMELY DETAILED prompts. Each variation should be unique, vivid, and LONG with a creative title.`;
 
     const model = getAI().getGenerativeModel({ 
       model: "gemini-2.5-flash",
@@ -495,7 +521,7 @@ Integrate all elements naturally into cohesive, descriptive prompts. Each variat
       throw new Error("API did not return an array of prompts.");
     }
     
-    console.log('[Gemini] Part 3 complete: Generated', prompts.length, 'Flux prompts');
+    console.log('[Gemini] Part 3 complete: Generated', prompts.length, 'Z-Turbo prompts');
     return prompts;
 
   } catch (error) {

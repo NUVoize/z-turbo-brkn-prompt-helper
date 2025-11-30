@@ -282,7 +282,7 @@ const cameraAngleOptions = [
     'First-Person View (FPV)', "Bird's-Eye View", "Worm's-Eye View"
 ];
 
-// Removed camera movement options for Flux image generation
+// Removed camera movement options for Z-Image-Turbo image generation
 
 const colorPaletteOptions = [
   'Vibrant and saturated',
@@ -587,8 +587,8 @@ const App: React.FC = () => {
       });
       console.log('[App] Part 2 complete:', actionDescResult.substring(0, 100));
 
-      // Part 3: Final Flux Prompts
-      setLoadingStep('Step 3/3: Crafting final Flux image prompts...');
+      // Part 3: Final Z-Turbo Prompts
+      setLoadingStep('Step 3/3: Crafting final Z-Image-Turbo prompts...');
       setStepProgress(100);
       console.log('[App] Part 3: Calling generateFinalPrompts...');
       const generatedPrompts = await generateFinalPrompts({
@@ -621,7 +621,7 @@ const App: React.FC = () => {
       return (
         <div className="flex flex-col items-center justify-center text-center mt-12">
           <Loader />
-          <p className="mt-4 text-zinc-400">{loadingStep || 'Crafting your Flux image prompts...'}</p>
+          <p className="mt-4 text-zinc-400">{loadingStep || 'Crafting your Z-Image-Turbo prompts...'}</p>
           {stepProgress > 0 && (
             <div className="w-full max-w-md mt-4">
               <div className="h-2 bg-zinc-800 rounded-full overflow-hidden">
@@ -658,7 +658,7 @@ const App: React.FC = () => {
     return (
         <div className="text-center mt-12 flex flex-col items-center">
             <h2 className="mt-4 text-2xl font-semibold text-zinc-200">Ready to create?</h2>
-            <p className="text-zinc-400 mt-2">Describe a subject and select your options to generate Flux image prompts.</p>
+            <p className="text-zinc-400 mt-2">Describe a subject and select your options to generate Z-Image-Turbo prompts.</p>
         </div>
     );
   };

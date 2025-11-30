@@ -1,20 +1,31 @@
-# FLUX 2.0 - BRKN AI Prompt Generator
+# Z-Image-Turbo - BRKN AI Prompt Generator
 
-A powerful AI-powered prompt generator designed for **FLUX 2.0** image generation. Built with React, TypeScript, and multiple LLM provider support to help you craft detailed, creative prompts for stunning images.
+A powerful AI-powered prompt generator designed for **Z-Image-Turbo** image generation. Built with React, TypeScript, and multiple LLM provider support to help you craft detailed, creative prompts optimized for Z-Turbo's long-form, structured prompt requirements.
 
-![FLUX 2.0 Prompt Generator](https://via.placeholder.com/1200x400.png?text=FLUX+2.0+Prompt+Generator)
+![Z-Image-Turbo Prompt Generator](https://via.placeholder.com/1200x400.png?text=Z-Image-Turbo+Prompt+Generator)
 
 ## ✨ Features
 
-- **🎨 Multi-Format Prompt Generation**: Generate prompts optimized for FLUX 2.0 image generation
+- **🎨 Z-Turbo Optimized Prompts**: Generate LONG, DETAILED, STRUCTURED prompts (150-300 words) optimized for Z-Image-Turbo
 - **🧠 Multiple LLM Providers**: Supports Google Gemini, Qwen (DashScope), Ollama, and LM Studio
 - **📝 Enhanced AI Captioning**: Upload images for AI-powered scene descriptions and prompt inspiration
 - **🎬 Multi-Select Dropdowns**: Choose multiple genres, moods, and styles for richer prompts
-- **🔄 Three-Stage Generation**: Character → Action → Final Prompt workflow for refined results
+- **🔄 Three-Stage Generation**: Character → Action → Final Prompt workflow for refined, verbose results
 - **🎯 NSFW Toggle**: Safe content generation with optional filtering
 - **📊 Word Count Display**: Real-time character and word count tracking
 - **🎨 Responsive Design**: Beautiful, modern UI with dark theme and smooth animations
 - **💾 Local Settings**: All API keys and preferences stored securely in your browser
+
+## 🌟 Z-Image-Turbo Specifications
+
+Z-Image-Turbo is Alibaba's 6B-parameter distilled model optimized for:
+- **Long, detailed prompts** (up to 1024 tokens)
+- **8-9 inference steps** for sub-second generation
+- **1024×1024 or 1280×720** resolutions
+- **CFG-free** (guidance scale 0.0, no negative prompts)
+- **Bilingual text rendering** (English/Chinese)
+- **Photorealistic quality** with strong prompt adherence
+- **Consumer GPU friendly** (runs on 16GB VRAM)
 
 ## 🛠️ Tech Stack
 
@@ -125,7 +136,7 @@ A powerful AI-powered prompt generator designed for **FLUX 2.0** image generatio
 ## 📁 Project Structure
 
 ```
-flux2-prompt-generator/
+z-image-turbo-prompt-generator/
 ├── src/
 │   ├── components/          # React components
 │   │   ├── ui/             # Reusable UI components (buttons, dialogs, etc.)
@@ -203,18 +214,25 @@ Deploy easily to:
 1. **Enter a subject**: Describe what you want to generate
 2. **Add details**: Select genres, moods, themes, and styles
 3. **Generate prompts**: Click "Generate Prompts" to create:
-   - Character description
-   - Action/scene description  
-   - Final FLUX-optimized prompt
+   - Character description (80-120 words)
+   - Action/scene description (60-100 words)
+   - Final Z-Turbo-optimized prompts (150-300 words each)
 4. **Copy and use**: Click any generated prompt to copy it to your clipboard
-5. **Generate images**: Use the prompt in FLUX 2.0 or your preferred image generator
+5. **Generate images**: Use the prompt in Z-Image-Turbo with these settings:
+   - **Steps**: 8-9
+   - **CFG Scale**: 0.0 (no negative prompts)
+   - **Resolution**: 1024×1024 or 1280×720
+   - **Max tokens**: 1024 (for very long prompts)
 
-### Tips for Best Results
-- Be specific with your subject description
-- Combine multiple genres/moods for unique results
-- Use the image upload feature for inspiration from existing images
-- Enable NSFW filtering if needed for safe content
-- Try different LLM providers to find your favorite style
+### Tips for Best Results with Z-Image-Turbo
+- **Be verbose**: Z-Turbo loves long, detailed prompts (150-300 words)
+- **Use structured descriptions**: Lead with physicality, then environment, then mood
+- **No negative prompts needed**: Z-Turbo is CFG-free
+- **Include bilingual text**: Z-Turbo excels at rendering English/Chinese text
+- **Combine multiple elements**: The more detail, the better
+- **Use the image upload feature** for inspiration from existing images
+- **Enable NSFW filtering** if needed for safe content
+- **Try different LLM providers** to find your favorite style
 
 ## 🤝 Contributing
 
@@ -251,8 +269,9 @@ For commercial licensing inquiries, please contact the project maintainer.
 ## 🙏 Acknowledgments
 
 - **BRKN** - Original concept and design
+- **Alibaba Cloud** - Z-Image-Turbo model
 - **Google Gemini** - AI capabilities
-- **Alibaba Cloud** - Qwen/DashScope support
+- **Qwen/DashScope** - LLM support
 - **Ollama** - Local LLM infrastructure
 - **LM Studio** - Local model management
 - **Vercel** - Excellent deployment platform
@@ -260,4 +279,4 @@ For commercial licensing inquiries, please contact the project maintainer.
 
 ---
 
-Made with ❤️ by the BRKN team | Powered by FLUX 2.0
+Made with ❤️ by the BRKN team | Powered by Z-Image-Turbo
