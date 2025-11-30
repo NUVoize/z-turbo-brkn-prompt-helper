@@ -34,7 +34,7 @@ const SettingsDialog: React.FC = () => {
   const [ollamaBase, setOllamaBase] = useState("http://localhost:11434");
   const [ollamaModel, setOllamaModel] = useState("qwen2.5-vl:32b");
   const [lmStudioBase, setLmStudioBase] = useState("http://localhost:1234");
-  const [lmStudioModel, setLmStudioModel] = useState("lmstudio-community/Meta-Llama-3.1-8B-Instruct-GGUF");
+  const [lmStudioModel, setLmStudioModel] = useState("");
 
   useEffect(() => {
     try {
@@ -47,7 +47,7 @@ const SettingsDialog: React.FC = () => {
       setOllamaBase(window.localStorage.getItem(KEYS.ollamaBase) || "http://localhost:11434");
       setOllamaModel(window.localStorage.getItem(KEYS.ollamaModel) || "qwen2.5-vl:32b");
       setLmStudioBase(window.localStorage.getItem(KEYS.lmStudioBase) || "http://localhost:1234");
-      setLmStudioModel(window.localStorage.getItem(KEYS.lmStudioModel) || "lmstudio-community/Meta-Llama-3.1-8B-Instruct-GGUF");
+      setLmStudioModel(window.localStorage.getItem(KEYS.lmStudioModel) || "");
     } catch {
       // ignore
     }
@@ -104,7 +104,7 @@ const SettingsDialog: React.FC = () => {
         window.localStorage.removeItem(KEYS.lmStudioBase);
         window.localStorage.removeItem(KEYS.lmStudioModel);
         setLmStudioBase("http://localhost:1234");
-        setLmStudioModel("lmstudio-community/Meta-Llama-3.1-8B-Instruct-GGUF");
+        setLmStudioModel("");
       }
       toast({ title: "Cleared", description: "Provider credentials cleared." });
       setOpen(false);
@@ -242,12 +242,12 @@ const SettingsDialog: React.FC = () => {
                 <Label htmlFor="lmstudio-model">LM Studio Model</Label>
                 <Input
                   id="lmstudio-model"
-                  placeholder="lmstudio-community/Meta-Llama-3.1-8B-Instruct-GGUF"
+                  placeholder="e.g., qwen/qwen2.5-vl-7b@q4_k_m"
                   value={lmStudioModel}
                   onChange={(e) => setLmStudioModel(e.target.value)}
                   aria-label="LM Studio Model"
                 />
-                <p className="text-xs text-muted-foreground">Ensure LM Studio is running and the model is loaded.</p>
+                <p className="text-xs text-muted-foreground">Find your model name in LM Studio's model list. Use the exact identifier shown (e.g., meta-llama-3-8b-instruct, qwen/qwen2.5-vl-7b@q4_k_m).</p>
               </div>
             </div>
           )}
