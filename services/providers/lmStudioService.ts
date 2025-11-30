@@ -5,7 +5,8 @@ import type { VideoPrompt } from '../../types';
 const LM_STUDIO_BASE_URL_KEY = 'LM_STUDIO_BASE_URL';
 const LM_STUDIO_MODEL_KEY = 'LM_STUDIO_MODEL';
 const DEFAULT_BASE_URL = 'http://localhost:1234';
-const DEFAULT_MODEL = 'lmstudio-community/Meta-Llama-3.1-8B-Instruct-GGUF';
+// Users must configure their actual model name in Settings (e.g., 'qwen/qwen2.5-vl-7b@q4_k_m')
+const DEFAULT_MODEL = '';
 
 function getBaseUrl(): string {
   try {
@@ -99,7 +100,10 @@ async function chat({
 
   if (!res.ok) {
     const errText = await res.text().catch(() => res.statusText);
-    throw new Error(`LM Studio error: ${res.status} ${errText}`);
+    const errorMsg = errText.includes('model_not_found') || errText.includes('Invalid model identifier')
+      ? `LM Studio error: Model "${model}" not found. Please check Settings and use your actual model name from LM Studio (e.g., 'qwen/qwen2.5-vl-7b@q4_k_m').`
+      : `LM Studio error: ${res.status} ${errText}`;
+    throw new Error(errorMsg);
   }
 
   const data = await res.json();
