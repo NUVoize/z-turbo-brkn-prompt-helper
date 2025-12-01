@@ -1,6 +1,6 @@
 @echo off
 setlocal enabledelayedexpansion
-title FLUX 2.0 - BRKN AI Prompt Generator
+title Z-TURBO - BRKN AI Prompt Generator
 
 :: Enhanced Windows 10/11 compatibility
 :: Disable ANSI colors if not supported
@@ -34,7 +34,7 @@ if "%ENABLE_COLORS%"=="0" (
 )
 
 echo %CYAN%========================================%RESET%
-echo %CYAN%    FLUX 2.0 Prompt Generator Start    %RESET%
+echo %CYAN%    Z-TURBO Prompt Generator Start    %RESET%
 echo %CYAN%========================================%RESET%
 echo.
 
