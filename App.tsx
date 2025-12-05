@@ -413,6 +413,7 @@ const App: React.FC = () => {
   const [isApiKeySet, setIsApiKeySet] = useState<boolean>(false);
   const [activeProvider, setActiveProviderState] = useState<LLMProvider>(getActiveLLMProvider());
   const [isDragging, setIsDragging] = useState<boolean>(false);
+  const [configJsonCopied, setConfigJsonCopied] = useState<boolean>(false);
 
   useEffect(() => {
     // Initialize active provider and its stored API key
@@ -679,11 +680,51 @@ const App: React.FC = () => {
     }
     
     if (prompts.length > 0) {
+      const configJson = {
+        scene,
+        style: isNsfwMode ? nsfwStyle : style,
+        protagonistAction,
+        lighting,
+        colorPalette,
+        mood,
+        cameraAngle,
+        compositionType,
+        cameraDevice,
+        isNsfwMode,
+        prompts: prompts.map(p => ({ title: p.title, prompt: p.prompt }))
+      };
+      
+      const handleCopyConfig = () => {
+        navigator.clipboard.writeText(JSON.stringify(configJson, null, 2));
+        setConfigJsonCopied(true);
+        setTimeout(() => setConfigJsonCopied(false), 2000);
+      };
+      
       return (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-12">
-          {prompts.map((p, index) => (
-            <PromptCard key={index} prompt={p} />
-          ))}
+        <div>
+          <div className="mb-4 flex justify-end">
+            <button
+              onClick={handleCopyConfig}
+              className="flex items-center gap-2 px-4 py-2 text-sm rounded-lg bg-zinc-700 hover:bg-zinc-600 text-zinc-300 hover:text-white transition-colors"
+            >
+              {configJsonCopied ? (
+                <>
+                  <svg className="w-4 h-4 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                  <span>Copied!</span>
+                </>
+              ) : (
+                <>
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                  <span>Copy Config JSON</span>
+                </>
+              )}
+            </button>
+          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {prompts.map((p, index) => (
+              <PromptCard key={index} prompt={p} />
+            ))}
+          </div>
         </div>
       );
     }
