@@ -1,56 +1,117 @@
-# Z-Image-Turbo - BRKN AI Prompt Generator
+# Z-TURBO - BRKN AI Prompt Generator
 
-# Requirements & Quick Install
+## Quick Install Guide
 
-This project is a React + Vite + Tailwind + TypeScript app optimized for generating long, detailed Z-Image-Turbo prompts. Follow these steps for a smooth setup.
+This is a React + Vite + Tailwind + TypeScript app for generating Z-Image-Turbo prompts.
 
 ## Requirements
-- Node.js ≥ 18 (recommended 20+)
-- npm ≥ 9 or Bun ≥ 1.0 (either is fine)
-- Git
-- Modern browser (Chromium, Firefox, Safari)
 
-Optional (for AI providers):
-- Google Gemini API key
-- DashScope (Qwen) API key
-- Ollama local server (default http://localhost:11434)
-- LM Studio local server (default http://localhost:1234)
+| Requirement | Version |
+|------------|---------|
+| Node.js | ≥ 18 (recommended 20+) |
+| npm | ≥ 9 |
+| Git | Latest |
+| Browser | Chrome, Firefox, Safari, Edge |
 
-## Quick Install
-1) Clone the repository
-   - git clone <your-repo-url>
-   - cd <repo-folder>
+**Alternative**: [Bun](https://bun.sh) ≥ 1.0 instead of npm
 
-2) Install dependencies
-   - With npm:  npm install
-   - Or with Bun:  bun install
+### Optional API Keys
+- [Google Gemini](https://makersuite.google.com/app/apikey) (Recommended)
+- [DashScope/Qwen](https://dashscope.console.aliyun.com/)
+- Ollama (local, http://localhost:11434)
+- LM Studio (local, http://localhost:1234)
 
-3) Run the app in development
-   - npm run dev   (or: bun run dev)
-   - App runs at: http://localhost:8080
+---
 
-4) Build for production
-   - npm run build   (or: bun run build)
-   - Preview: npm run preview
+## Installation
 
-## Configure AI Providers (in-app)
-1) Open the app and click the Settings (gear) icon.
-2) Choose your provider:
-   - Gemini: paste your Google Gemini API key.
-   - Qwen (DashScope): paste your DashScope API key.
-   - Ollama: ensure the local server is running (default base URL is http://localhost:11434) and enter the base URL/model if needed.
-   - LM Studio: ensure the local server is running (default base URL is http://localhost:1234) and configure as needed.
-3) Save settings and test by generating prompts.
+### Windows
+
+```
+install-windows.bat
+```
+
+Then launch with:
+```
+start-ui.bat
+```
+
+### Linux / macOS
+
+```bash
+chmod +x install.sh
+./install.sh
+```
+
+Then launch with:
+```bash
+./start.sh
+```
+
+### Manual (All Platforms)
+
+```bash
+# Install dependencies
+npm install
+# or: bun install
+
+# Start dev server
+npm run dev
+# or: bun run dev
+```
+
+App runs at: **http://localhost:8080**
+
+---
+
+## Configure AI Providers
+
+1. Open the app and click the **Settings** (⚙️) icon
+2. Choose your provider and enter API key:
+   - **Gemini**: Paste Google Gemini API key
+   - **Qwen**: Paste DashScope API key
+   - **Ollama**: Ensure local server is running
+   - **LM Studio**: Ensure local server is running
+3. Save and test
+
+---
 
 ## Z-Image-Turbo Settings
-When using the generated prompts in Z-Image-Turbo, use these settings:
-- **Steps**: 8-9 (Z-Turbo is optimized for 8 NFE steps)
-- **CFG Scale**: 0.0 (Z-Turbo is CFG-free, no negative prompts)
-- **Resolution**: 1024×1024 or 1280×720
-- **Max Tokens**: 1024 (Z-Turbo supports up to 1024 tokens for very long prompts)
+
+When using generated prompts:
+
+| Setting | Value |
+|---------|-------|
+| Steps | 8-9 |
+| CFG Scale | 0.0 |
+| Resolution | 1024×1024 or 1280×720 |
+| Max Tokens | 1024 |
+
+---
+
+## Build Commands
+
+```bash
+# Development
+npm run dev
+
+# Production build
+npm run build
+
+# Preview build
+npm run preview
+```
+
+---
 
 ## Notes
-- No .env needed; keys are stored securely in your browser (local settings).
-- Dev server port is 8080 (configured in vite.config.ts).
-- Z-Image-Turbo works best with LONG, DETAILED, STRUCTURED prompts (150-300 words).
-- If you run into issues, please share the console error message to help troubleshoot quickly.
+
+- No `.env` file needed - keys stored in browser localStorage
+- Dev server port: 8080
+- Z-Turbo works best with LONG, DETAILED prompts (150-300 words)
+
+---
+
+## Troubleshooting
+
+See [TROUBLESHOOTING.md](TROUBLESHOOTING.md) for common issues and solutions.

@@ -1,8 +1,6 @@
-# Z-Image-Turbo - BRKN AI Prompt Generator
+# Z-TURBO - BRKN AI Prompt Generator
 
 A powerful AI-powered prompt generator designed for **Z-Image-Turbo** image generation. Built with React, TypeScript, and multiple LLM provider support to help you craft detailed, creative prompts optimized for Z-Turbo's long-form, structured prompt requirements.
-
-![Z-Image-Turbo Prompt Generator](https://via.placeholder.com/1200x400.png?text=Z-Image-Turbo+Prompt+Generator)
 
 ## ✨ Features
 
@@ -27,20 +25,7 @@ Z-Image-Turbo is Alibaba's 6B-parameter distilled model optimized for:
 - **Photorealistic quality** with strong prompt adherence
 - **Consumer GPU friendly** (runs on 16GB VRAM)
 
-## 🛠️ Tech Stack
-
-- **React 18** - Modern UI framework
-- **TypeScript** - Type-safe development
-- **Vite** - Lightning-fast build tool
-- **Tailwind CSS** - Utility-first styling
-- **Radix UI** - Accessible component primitives
-- **TanStack Query** - Powerful data fetching
-- **Google Gemini AI** - Advanced language model
-- **Qwen (DashScope)** - Alibaba's LLM service
-- **Ollama** - Local LLM support
-- **LM Studio** - Local model management
-
-## 📋 Prerequisites
+## 📋 Requirements
 
 - **Node.js** ≥ 18 (recommended 20+)
 - **npm** ≥ 9 or **Bun** ≥ 1.0
@@ -55,227 +40,153 @@ Z-Image-Turbo is Alibaba's 6B-parameter distilled model optimized for:
 
 ## 🚀 Quick Start
 
-### Windows Users (Easiest)
+### Windows Users
 
 1. **Clone the repository**
    ```bash
-   git clone <your-repo-url>
-   cd <repo-folder>
+   git clone https://github.com/YOUR-USERNAME/z-turbo-prompt-generator.git
+   cd z-turbo-prompt-generator
    ```
 
 2. **Run the installer**
-   ```bash
+   ```
    install-windows.bat
    ```
    - The installer will check dependencies and guide you through setup
    - Choose between npm or Bun (npm recommended for beginners)
-   - Optionally start the dev server automatically
 
-3. **Launch the app** (if you didn't auto-start)
-   ```bash
+3. **Launch the app**
+   ```
    start-ui.bat
+   ```
+   Opens automatically at http://localhost:8080
+
+### Linux / macOS Users
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/YOUR-USERNAME/z-turbo-prompt-generator.git
+   cd z-turbo-prompt-generator
+   ```
+
+2. **Run the installer**
+   ```bash
+   chmod +x install.sh
+   ./install.sh
+   ```
+
+3. **Launch the app**
+   ```bash
+   chmod +x start.sh
+   ./start.sh
    ```
    Opens automatically at http://localhost:8080
 
 ### Manual Installation (All Platforms)
 
-1. **Clone the repository**
-   ```bash
-   git clone <your-repo-url>
-   cd <repo-folder>
-   ```
+```bash
+# Clone
+git clone https://github.com/YOUR-USERNAME/z-turbo-prompt-generator.git
+cd z-turbo-prompt-generator
 
-2. **Install dependencies**
-   ```bash
-   npm install
-   # or
-   bun install
-   ```
+# Install dependencies
+npm install
+# or: bun install
 
-3. **Start development server**
-   ```bash
-   npm run dev
-   # or
-   bun run dev
-   ```
+# Start dev server
+npm run dev
+# or: bun run dev
+```
 
-4. **Open your browser**
-   Navigate to http://localhost:8080
+Open http://localhost:8080 in your browser.
 
 ## ⚙️ Configuration
 
 ### Setting Up AI Providers
 
-1. Click the **Settings** (⚙️) icon in the top right
-2. Choose your preferred LLM provider:
+Click the **Settings** (⚙️) icon in the app and configure your preferred provider:
 
-#### Option 1: Google Gemini (Recommended)
-- Get your API key from [Google AI Studio](https://makersuite.google.com/app/apikey)
-- Paste it in the Gemini API Key field
-- Save and test
+| Provider | Setup |
+|----------|-------|
+| **Google Gemini** (Recommended) | Get key from [Google AI Studio](https://makersuite.google.com/app/apikey) |
+| **Qwen (DashScope)** | Get key from [DashScope Console](https://dashscope.console.aliyun.com/) |
+| **Ollama** (Local) | Install [Ollama](https://ollama.ai), run locally on port 11434 |
+| **LM Studio** (Local) | Install [LM Studio](https://lmstudio.ai), start local server on port 1234 |
 
-#### Option 2: Qwen (DashScope)
-- Get your API key from [DashScope Console](https://dashscope.console.aliyun.com/)
-- Paste it in the DashScope API Key field
-- Save and test
-
-#### Option 3: Ollama (Local)
-- Install and run [Ollama](https://ollama.ai)
-- Default base URL: http://localhost:11434
-- Ensure Ollama is running before generating prompts
-
-#### Option 4: LM Studio (Local)
-- Install and run [LM Studio](https://lmstudio.ai)
-- Load a model and start the local server
-- Default base URL: http://localhost:1234
-
-### Storage Location
-- All settings, API keys, and preferences are stored in your browser's localStorage
-- No data is sent to external servers except for API calls to your chosen LLM provider
-
-## 📁 Project Structure
-
-```
-z-image-turbo-prompt-generator/
-├── src/
-│   ├── components/          # React components
-│   │   ├── ui/             # Reusable UI components (buttons, dialogs, etc.)
-│   │   └── SettingsDialog.tsx
-│   ├── pages/              # Page components
-│   │   └── Index.tsx       # Main prompt generator page
-│   ├── services/           # API services
-│   │   ├── geminiService.ts
-│   │   ├── llm/
-│   │   │   └── router.ts   # LLM provider router
-│   │   └── providers/      # Individual provider services
-│   ├── lib/                # Utilities
-│   └── main.tsx            # App entry point
-├── components/             # Standalone components
-│   ├── Header.tsx
-│   ├── Footer.tsx
-│   └── icons/
-├── public/                 # Static assets
-├── install-windows.bat     # Windows installer script
-├── start-ui.bat           # Windows dev server launcher
-└── package.json
-```
-
-## 📦 Build Commands
-
-```bash
-# Development server (with hot reload)
-npm run dev
-# or
-bun run dev
-
-# Build for production
-npm run build
-# or
-bun run build
-
-# Preview production build
-npm run preview
-# or
-bun run preview
-
-# Type checking
-npm run type-check
-# or
-bun run type-check
-```
-
-## 🌐 Deployment
-
-### Building for Production
-
-```bash
-npm run build
-# or
-bun run build
-```
-
-The optimized production build will be in the `dist/` directory.
-
-### Deployment Platforms
-
-Deploy easily to:
-- **Vercel**: Connect your GitHub repo and deploy automatically
-- **Netlify**: Drag and drop the `dist` folder or connect via Git
-- **GitHub Pages**: Configure in repository settings
-- **Any static host**: Upload the contents of `dist/`
-
-**Build Settings:**
-- Build command: `npm run build`
-- Output directory: `dist`
-- Node version: 18+
+### Storage
+- All settings and API keys are stored in your browser's localStorage
+- No data is sent to external servers except API calls to your chosen LLM provider
 
 ## 🎯 Usage
 
 1. **Enter a subject**: Describe what you want to generate
 2. **Add details**: Select genres, moods, themes, and styles
-3. **Generate prompts**: Click "Generate Prompts" to create:
-   - Character description (80-120 words)
-   - Action/scene description (60-100 words)
-   - Final Z-Turbo-optimized prompts (150-300 words each)
-4. **Copy and use**: Click any generated prompt to copy it to your clipboard
-5. **Generate images**: Use the prompt in Z-Image-Turbo with these settings:
-   - **Steps**: 8-9
-   - **CFG Scale**: 0.0 (no negative prompts)
-   - **Resolution**: 1024×1024 or 1280×720
-   - **Max tokens**: 1024 (for very long prompts)
+3. **Generate prompts**: Click "Generate Prompts" to create optimized prompts
+4. **Copy and use**: Click any generated prompt to copy it
 
-### Tips for Best Results with Z-Image-Turbo
+### Z-Image-Turbo Settings
+When using generated prompts in Z-Image-Turbo:
+- **Steps**: 8-9
+- **CFG Scale**: 0.0 (no negative prompts needed)
+- **Resolution**: 1024×1024 or 1280×720
+- **Max tokens**: 1024
+
+### Tips for Best Results
 - **Be verbose**: Z-Turbo loves long, detailed prompts (150-300 words)
 - **Use structured descriptions**: Lead with physicality, then environment, then mood
 - **No negative prompts needed**: Z-Turbo is CFG-free
-- **Include bilingual text**: Z-Turbo excels at rendering English/Chinese text
-- **Combine multiple elements**: The more detail, the better
 - **Use the image upload feature** for inspiration from existing images
-- **Enable NSFW filtering** if needed for safe content
-- **Try different LLM providers** to find your favorite style
+
+## 🔧 Troubleshooting
+
+Having issues? Check [TROUBLESHOOTING.md](TROUBLESHOOTING.md) for common problems and solutions.
+
+## 📦 Build Commands
+
+```bash
+# Development server
+npm run dev
+
+# Production build
+npm run build
+
+# Preview production build
+npm run preview
+```
+
+## 🌐 Deployment
+
+Build for production:
+```bash
+npm run build
+```
+
+Deploy the `dist/` folder to any static host:
+- **Vercel**: Connect GitHub repo for automatic deploys
+- **Netlify**: Drag and drop `dist` folder
+- **GitHub Pages**: Configure in repository settings
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
-
+Contributions welcome! Please:
 1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add AmazingFeature'`)
+4. Push to branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-## 📜 License & Usage Policy
+## 📜 License
 
 This project is licensed under the **PolyForm Noncommercial License 1.0.0**.
 
-### ✅ You CAN:
-- Use for personal, educational, or research purposes
-- Modify and adapt the code for non-commercial use
-- Share and distribute for non-commercial purposes
-
-### ❌ You CANNOT:
-- Use for commercial purposes without explicit permission
-- Sell or monetize the software or derivatives
-- Use in commercial products or services
-
-For commercial licensing inquiries, please contact the project maintainer.
+- ✅ Personal, educational, research use allowed
+- ✅ Modify and share for non-commercial purposes
+- ❌ Commercial use requires explicit permission
 
 ## 📧 Support
 
-- **Issues**: [GitHub Issues](<your-repo-url>/issues)
-- **Discussions**: [GitHub Discussions](<your-repo-url>/discussions)
-- **Email**: Contact via GitHub profile
-
-## 🙏 Acknowledgments
-
-- **BRKN** - Original concept and design
-- **Alibaba Cloud** - Z-Image-Turbo model
-- **Google Gemini** - AI capabilities
-- **Qwen/DashScope** - LLM support
-- **Ollama** - Local LLM infrastructure
-- **LM Studio** - Local model management
-- **Vercel** - Excellent deployment platform
-- All open-source contributors and maintainers
+- **Issues**: [GitHub Issues](https://github.com/YOUR-USERNAME/z-turbo-prompt-generator/issues)
+- **Troubleshooting**: [TROUBLESHOOTING.md](TROUBLESHOOTING.md)
 
 ---
 
