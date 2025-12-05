@@ -1088,10 +1088,16 @@ const App: React.FC = () => {
               <div className="md:col-span-2 mt-4">
                 <button
                   type="submit"
-                  disabled={loading || !scene.trim() || lighting.length === 0 || !isApiKeySet}
+                  disabled={loading || (!scene.trim() && !imageBase64) || lighting.length === 0 || !isApiKeySet}
                   className="w-full flex items-center justify-center px-6 py-3 bg-red-600 text-white rounded-lg font-bold hover:bg-red-500 disabled:bg-zinc-700 disabled:text-zinc-400 disabled:cursor-not-allowed transition-colors duration-200 text-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-zinc-800 focus:ring-red-500"
                 >
-                  {!isApiKeySet ? 'Enter API Key to Generate' : 'Generate Prompts'}
+                  {!isApiKeySet 
+                    ? 'Enter API Key to Generate' 
+                    : !scene.trim() && imageBase64 
+                      ? 'Generate from Image' 
+                      : scene.trim() && imageBase64 
+                        ? 'Generate from Description + Image' 
+                        : 'Generate Prompts'}
                 </button>
               </div>
             </div>
