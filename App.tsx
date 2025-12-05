@@ -554,9 +554,42 @@ const App: React.FC = () => {
 
   const handleGeneratePrompts = useCallback(async (e: FormEvent) => {
     e.preventDefault();
-    if (!scene.trim() || loading || lighting.length === 0 || !isApiKeySet) return;
+    // Allow generation with EITHER description OR image (or both)
+    const hasDescription = scene.trim().length > 0;
+    const hasImage = !!imageBase64;
+    
+    if ((!hasDescription && !hasImage) || loading || lighting.length === 0 || !isApiKeySet) return;
 
     console.log('[App] Starting 3-part prompt generation...');
+    
+    // If we have an image but no description, auto-generate a caption first
+    let workingScene = scene.trim();
+    if (!hasDescription && hasImage && imageFile) {
+      console.log('[App] No description provided, auto-generating caption from image...');
+      setLoadingStep('Auto-captioning image...');
+      try {
+        const base64Data = imageBase64.split(',')[1];
+        const results = await generateCaptionFromImage({
+          imageData: base64Data,
+          mimeType: imageFile.type,
+          isNsfw: isNsfwMode,
+        });
+        if (results && results.length > 0) {
+          workingScene = results[0]; // Use first caption
+          setScene(workingScene); // Update the UI
+          setCaptions(results);
+          setSelectedCaptionIndex(0);
+          console.log('[App] Auto-caption generated:', workingScene.substring(0, 100));
+        } else {
+          throw new Error('Failed to generate caption from image');
+        }
+      } catch (err) {
+        console.error('[App] Auto-caption failed:', err);
+        setError('Failed to generate description from image. Please enter a description manually.');
+        setLoading(false);
+        return;
+      }
+    }
     console.log('[App] Active provider:', activeProvider);
     setLoading(true);
     setError(null);
@@ -570,7 +603,7 @@ const App: React.FC = () => {
       setStepProgress(33);
       console.log('[App] Part 1: Calling generateCaptionAndCharacter...');
       const refinedScene = await generateCaptionAndCharacter({
-        scene,
+        scene: workingScene,
         style: [...style, ...nsfwStyle].filter(Boolean).join(', '),
         isNsfw: isNsfwMode,
       });
@@ -614,7 +647,7 @@ const App: React.FC = () => {
       setLoadingStep('');
       setStepProgress(0);
     }
-  }, [scene, actionDescription, style, nsfwStyle, protagonistAction, colorPalette, mood, cameraAngle, cameraDevice, lighting, compositionType, loading, isNsfwMode, activeProvider, isApiKeySet]);
+  }, [scene, actionDescription, style, nsfwStyle, protagonistAction, colorPalette, mood, cameraAngle, cameraDevice, lighting, compositionType, loading, isNsfwMode, activeProvider, isApiKeySet, imageBase64, imageFile]);
 
   const renderContent = () => {
     if (loading) {
