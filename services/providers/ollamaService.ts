@@ -253,12 +253,12 @@ export async function generateFinalPrompts(params: {
   const { actionDescription, cameraAngle, lighting, colorPalette, mood, compositionType, isNsfw, cameraDevice } = params;
 
   const systemPrefix = isNsfw
-    ? 'You are an expert Z-Image-Turbo prompt writer for adult content. Z-Turbo excels with EXTREMELY LONG, DETAILED prompts (200-300 words). Create explicit image prompts with maximum anatomical detail. Output JSON only.'
-    : 'You are an expert Z-Image-Turbo prompt writer. Z-Turbo works best with LONG, DETAILED prompts (150-250 words). Create verbose, descriptive prompts. Output JSON only.';
+    ? 'You are an expert Z-Image-Turbo prompt writer for adult content. Create focused, efficient prompts (100-150 words). Output JSON only.'
+    : 'You are an expert Z-Image-Turbo prompt writer. Create focused, efficient prompts (80-120 words). Output JSON only.';
 
   const prompt = `${systemPrefix}
 
-Generate 3 EXTREMELY DETAILED Z-Image-Turbo prompt variations as a JSON array (${isNsfw ? '200-300' : '150-250'} words each). Each item has {"title": string, "prompt": string}.
+Generate 3 concise Z-Image-Turbo prompts as a JSON array. Each item has {"title": string, "prompt": string}.
 
 Subject & Scene: "${actionDescription}"
 Perspective: "${cameraAngle}"
@@ -268,18 +268,15 @@ Mood/Atmosphere: "${mood}"
 Composition: "${compositionType}"
 Photography Style: "${cameraDevice ?? 'professional photography'}"
 
-Z-Image-Turbo Guidelines:
-- EXTREMELY LONG AND DETAILED (${isNsfw ? '200-300' : '150-250'} words per prompt)
-- Z-Turbo LOVES verbose, structured, flowing descriptions
-- Include detailed subject physicality, positioning, environment, lighting, colors, mood, composition
-- ${isNsfw ? 'Use explicit, anatomically precise terminology with maximum detail' : 'Focus on rich artistic and technical details'}
-- Use natural flowing paragraphs, not keyword lists
-- Token target: ${isNsfw ? '400-500' : '300-400'} tokens (Z-Turbo supports up to 1024)
-- Include bilingual text elements when relevant
+Guidelines:
+- Keep prompts focused (${isNsfw ? '100-150' : '80-120'} words)
+- Subject description: physical traits, clothing/state, pose
+- Environment: key location details only
+- Technical: lighting, composition, camera style
+- ${isNsfw ? 'Include explicit anatomical details directly' : 'Focus on artistic and photographic qualities'}
+- Natural flowing sentences, not keyword lists
 
-Example: "A cyberpunk hacker in neon-lit room, vibrant electric colors, dramatic rim lighting, rule of thirds composition, shot on ARRI Alexa with anamorphic lens, moody and mysterious atmosphere"
-
-Integrate all elements naturally into cohesive, EXTREMELY DETAILED prompts.
+Integrate all elements naturally into concise, vivid prompts.
 
 Return ONLY a JSON array of 3 prompts.`;
 

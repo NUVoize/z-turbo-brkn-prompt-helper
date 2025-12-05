@@ -465,16 +465,12 @@ export const generateFinalPrompts = async (params: {
     const { actionDescription, cameraAngle, lighting, colorPalette, mood, compositionType, isNsfw, cameraDevice } = params;
 
     const systemInstruction = isNsfw
-      ? 'You are an expert Z-Image-Turbo prompt writer specializing in adult content. Z-Image-Turbo excels with EXTREMELY LONG, DETAILED, STRUCTURED prompts (200-300 words). Create explicit image prompts with maximum anatomical detail. Output JSON only.'
-      : 'You are an expert Z-Image-Turbo prompt writer. Z-Image-Turbo works best with LONG, DETAILED, STRUCTURED prompts (150-250 words). Create verbose, descriptive prompts. Output JSON only.';
-
-    const examples = `**Z-Turbo Example (SFW):** "A petite Asian woman in her mid-20s with shoulder-length straight black hair and delicate features, wearing a flowing white silk dress with intricate gold embroidery along the hem and sleeves, stands barefoot on smooth wet river stones at the edge of a misty mountain stream during the golden hour. Her porcelain skin glows warmly in the amber sunlight filtering through the dense forest canopy above. She's positioned in a three-quarter turn toward the camera, left hand gently touching her collarbone while her right hand holds the fabric of her dress slightly lifted to avoid the water. The composition follows the rule of thirds with her figure placed on the left vertical line, creating negative space on the right filled with the soft-focus forest background and rising steam from the cool water. Dramatic rim lighting from the low sun creates a golden halo around her silhouette, separating her from the darker forest behind. The color palette features warm golden tones contrasting with cool blue-green shadows in the water and foliage. The mood is serene, ethereal, and contemplative, enhanced by volumetric lighting rays cutting through the mist. Shot with a full-frame camera at f/1.4 for shallow depth of field, creating dreamy bokeh in the background while maintaining sharp focus on her eyes and the intricate dress details."
-    
-**Z-Turbo Example (NSFW):** "A voluptuous Caucasian woman, approximately 5'8" tall in her late 20s with cascading wavy blonde hair reaching mid-back and piercing blue eyes, completely nude with large full breasts (38DD cup) and prominent erect pink nipples, standing in a luxurious marble-tiled bathroom with floor-to-ceiling windows overlooking a neon-lit cityscape at night. Her hourglass figure features wide hips, thick thighs, and a neatly groomed landing strip of pubic hair. She's positioned facing the camera at a slight angle, weight shifted to her right leg creating an S-curve posture, left hand running through her hair while her right hand rests on her hip with fingers splayed across her upper thigh. Her skin glistens with water droplets catching the ambient light from the city below and the warm amber glow of modern pendant lights hanging from the ceiling. The composition places her centrally using symmetrical framing, with the massive window behind her creating a dramatic backlit silhouette effect while still maintaining visible detail on her body through the strategic use of warm interior lighting. Neon colors from the city—electric blues, hot pinks, and vibrant purples—reflect off the polished marble surfaces and her wet skin, creating a cyberpunk aesthetic contrast with the organic curves of her body. The mood is intensely sensual and voyeuristic, enhanced by the high-contrast lighting that emphasizes every curve, contour, and droplet of water on her exposed skin. Shot with a Leica SL2-S at f/2.0 with slightly increased ISO to capture both the city lights and interior detail, creating a cinematic depth of field that keeps her figure sharp while the cityscape behind becomes a beautiful bokeh of colored light."`;
+      ? 'You are an expert Z-Image-Turbo prompt writer specializing in adult content. Create focused, efficient prompts (100-150 words). Output JSON only.'
+      : 'You are an expert Z-Image-Turbo prompt writer. Create focused, efficient prompts (80-120 words). Output JSON only.';
 
     const prompt = `${systemInstruction}
 
-Generate 3 EXTREMELY DETAILED Z-Image-Turbo prompt variations (${isNsfw ? '200-300' : '150-250'} words each) as JSON. Each item has {"title": string, "prompt": string}.
+Generate 3 concise Z-Image-Turbo prompts as JSON. Each item has {"title": string, "prompt": string}.
 
 **Subject & Scene:** "${actionDescription}"
 **Perspective:** "${cameraAngle}"
@@ -484,25 +480,15 @@ Generate 3 EXTREMELY DETAILED Z-Image-Turbo prompt variations (${isNsfw ? '200-3
 **Composition:** "${compositionType}"
 **Photography Style:** "${cameraDevice || 'professional photography'}"
 
-Z-Image-Turbo Prompting Guidelines:
-- EXTREMELY LONG AND DETAILED (${isNsfw ? '200-300' : '150-250'} words per prompt)
-- Z-Turbo LOVES verbose, structured, flowing descriptions
-- Start with DETAILED subject physicality (ethnicity, body type, hair, features, clothing specifics)
-- Describe exact positioning and body mechanics
-- Rich environmental details (location, architecture, objects, textures)
-- Lighting effects and how they interact with surfaces
-- Color palette integration with specific tones
-- Mood/atmosphere with sensory details
-- Composition technique with spatial relationships
-- Camera/lens characteristics
-- ${isNsfw ? 'Explicit anatomical details, sexual positions, body parts, arousal indicators, intimate features with maximum specificity' : 'Artistic and technical photography details'}
-- Token target: ${isNsfw ? '400-500' : '300-400'} tokens (Z-Turbo supports up to 1024)
-- Use natural flowing paragraphs, NOT keyword lists
-- Include bilingual text elements when relevant (Z-Turbo excels at text rendering)
+Guidelines:
+- Keep prompts focused (${isNsfw ? '100-150' : '80-120'} words)
+- Subject description: physical traits, clothing/state, pose
+- Environment: key location details only
+- Technical: lighting, composition, camera style
+- ${isNsfw ? 'Include explicit anatomical details directly' : 'Focus on artistic and photographic qualities'}
+- Natural flowing sentences, not keyword lists
 
-${examples}
-
-Integrate all elements naturally into cohesive, EXTREMELY DETAILED prompts. Each variation should be unique, vivid, and LONG with a creative title.`;
+Integrate all elements naturally into concise, vivid prompts. Each variation should be unique with a creative title.`;
 
     const model = getAI().getGenerativeModel({ 
       model: "gemini-2.5-flash",
